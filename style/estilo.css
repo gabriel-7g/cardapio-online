@@ -10,3 +10,7 @@ header {
     background-position: center;
     background-repeat: no-repeat;
 }
+
+#cart-btn:hover {
+  cursor: pointer;
+}
