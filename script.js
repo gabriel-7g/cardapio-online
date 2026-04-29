@@ -1,3 +1,4 @@
+let cart = []
 const menu = document.getElementById("menu");
 const cartBtn = document.getElementById("cart-btn");
 const cartCount = document.getElementById("cart-count");
@@ -36,5 +37,10 @@ menu.addEventListener("click", (e) => {
 
 // Função para adicionar itens ao carrinho
 function addToCart(name, price) {
-    const item = document.createElement("div")
+
+    cart.push({
+        name,
+        price,
+        quantity: 1
+    })
 }
