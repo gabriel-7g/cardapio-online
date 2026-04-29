@@ -449,6 +449,15 @@ header {
   background-position: center;
   background-repeat: no-repeat;
 }
+#cart-btn:hover {
+  cursor: pointer;
+}
+#close-modal-btn:hover {
+  cursor: pointer;
+}
+.add-to-cart-btn:hover {
+  cursor: pointer;
+}
 @property --tw-border-style {
   syntax: "*";
   inherits: false;
@@ -568,4 +577,3 @@ header {
     }
   }
 }
-/* FIM DO TAILWINDCSS */

@@ -37,10 +37,40 @@ menu.addEventListener("click", (e) => {
 
 // Função para adicionar itens ao carrinho
 function addToCart(name, price) {
+    const existingItem = cart.find(item => item.name === name);
+    if (existingItem) {
+        existingItem.quantity += 1
+    }else{
+        cart.push({
+            name,
+            price,
+            quantity: 1
+        })
+    }
+    updateCartModal()
+}
 
-    cart.push({
-        name,
-        price,
-        quantity: 1
+// Atualizar o carrinho
+function updateCartModal(){
+    cartItemsContainer.innerHTML = "";
+    let total = 0
+    cart.forEach(item =>{
+        const cartItemElement = document.createElement("div");
+        cartItemElement.innerHTML = `
+            <div>
+                <div>
+                    <p>${item.name}<p>
+                    <p>${item.quantity}<p>
+                    <p>${item.price}<p>
+                <div>
+                <div>
+                    <button>
+                        Remover
+                    <button>
+                <div>
+
+            <div>
+        `
+        cartItemsContainer.appendChild(cartItemElement)
     })
 }
