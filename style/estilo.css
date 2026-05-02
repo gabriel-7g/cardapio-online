@@ -21,3 +21,7 @@ header {
 .add-to-cart-btn:hover{
     cursor: pointer;
 }
+
+.remove-from-cart-btn{
+  cursor: pointer;
+}
