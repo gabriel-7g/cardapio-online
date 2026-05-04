@@ -25,3 +25,7 @@ header {
 .remove-from-cart-btn{
   cursor: pointer;
 }
+
+#checkout-btn{
+  cursor: pointer;
+}
