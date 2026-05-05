@@ -122,6 +122,12 @@ addressInput.addEventListener("input", function(e){
 
 //Finalização do pedido
 checkoutBtn.addEventListener("click", function(){
+    // const isOpen = checkRestaurantOpen();
+    // if(!isOpen){
+    //     alert("Restaurante fechado no momento!")
+    //     return
+    // }
+
     if(cart.length == 0) return
 
     if(addressInput.value == ""){
@@ -129,6 +135,17 @@ checkoutBtn.addEventListener("click", function(){
         addressInput.classList.add("border-red-500")
         return;
     }
+
+    //Enviar pedido para o whatssap
+    const cartItems = cart.map((item) => {
+        return(
+            `${item.name} Quantidade: (${item.quantity}) Preço: R$${item.price} /`
+        )
+    }).join("")
+    const message = encodeURIComponent(cartItems)
+    const phone = "81997254072"
+
+    window.open(`https://wa.me/${phone}?text=${message} Endereço:${addressInput.value}, "_blank"`)
 })
 
 //Verificação do horário da loja
@@ -147,3 +164,4 @@ if(isOpen){
     spanItem.classList.remove("bg-green-500")
     spanItem.classList.add("bg-red-500")
 }
+
