@@ -42,7 +42,7 @@ function addToCart(name, price) {
     const existingItem = cart.find(item => item.name === name);
     if (existingItem) {
         existingItem.quantity += 1
-    }else{
+    } else {
         cart.push({
             name,
             price,
@@ -53,10 +53,10 @@ function addToCart(name, price) {
 }
 
 // Atualizar o carrinho
-function updateCartModal(){
+function updateCartModal() {
     cartItemsContainer.innerHTML = "";
     let total = 0
-    cart.forEach(item =>{
+    cart.forEach(item => {
         const cartItemElement = document.createElement("div");
         cartItemElement.classList.add("flex", "justify-between", "mb-4", "flex-col")
 
@@ -78,7 +78,7 @@ function updateCartModal(){
         cartItemsContainer.appendChild(cartItemElement)
     })
 
-    cartTotal.textContent = total.toLocaleString("pt-BR",{
+    cartTotal.textContent = total.toLocaleString("pt-BR", {
         style: "currency",
         currency: "BRL"
     })
@@ -86,20 +86,20 @@ function updateCartModal(){
 }
 
 //Função para remover o item do carrinho
-cartItemsContainer.addEventListener("click", function(e){
-    if(e.target.classList.contains("remove-from-cart-btn")){
+cartItemsContainer.addEventListener("click", function (e) {
+    if (e.target.classList.contains("remove-from-cart-btn")) {
         const name = e.target.getAttribute("data-name")
         removeItemCart(name);
     }
 })
 
-function removeItemCart(name){
-    const index = cart.findIndex(item => item.name ==name)
+function removeItemCart(name) {
+    const index = cart.findIndex(item => item.name == name)
 
-    if(index !== -1){
+    if (index !== -1) {
         const item = cart[index]
 
-        if(item.quantity > 1){
+        if (item.quantity > 1) {
             item.quantity -= 1
             updateCartModal()
             return
@@ -110,10 +110,10 @@ function removeItemCart(name){
 }
 
 // Ação para pegar o endereço
-addressInput.addEventListener("input", function(e){
+addressInput.addEventListener("input", function (e) {
     let inputValue = e.target.value;
 
-    if(inputValue !== ""){
+    if (inputValue !== "") {
         addressInput.classList.remove("border-red-500")
         addressWarn.classList.add("hidden")
     }
@@ -121,16 +121,27 @@ addressInput.addEventListener("input", function(e){
 })
 
 //Finalização do pedido
-checkoutBtn.addEventListener("click", function(){
-    // const isOpen = checkRestaurantOpen();
-    // if(!isOpen){
-    //     alert("Restaurante fechado no momento!")
-    //     return
-    // }
+checkoutBtn.addEventListener("click", function () {
+    const isOpen = checkRestaurantOpen();
+    if (!isOpen) {
+        Toastify({
+            text: "Restaurante fechado no momento tente mais tarde",
+            duration: 3000,
+            close: true,
+            gravity: "top", 
+            position: "left", 
+            stopOnFocus: true, 
+            style: {
+                background: "#ef4444",
+            },
+        }).showToast();
 
-    if(cart.length == 0) return
+        return
+    }
 
-    if(addressInput.value == ""){
+    if (cart.length == 0) return
+
+    if (addressInput.value == "") {
         addressWarn.classList.remove("hidden")
         addressInput.classList.add("border-red-500")
         return;
@@ -138,18 +149,21 @@ checkoutBtn.addEventListener("click", function(){
 
     //Enviar pedido para o whatssap
     const cartItems = cart.map((item) => {
-        return(
+        return (
             `${item.name} Quantidade: (${item.quantity}) Preço: R$${item.price} /`
         )
     }).join("")
     const message = encodeURIComponent(cartItems)
     const phone = "81997254072"
 
-    window.open(`https://wa.me/${phone}?text=${message} Endereço:${addressInput.value}, "_blank"`)
+    window.open(`https://wa.me/${phone}?text=${message} Endereço:${addressInput.value}`)
+
+    cart.length = 0;
+    updateCartModal();
 })
 
 //Verificação do horário da loja
-function checkRestaurantOpen(){
+function checkRestaurantOpen() {
     const data = new Date();
     const hora = data.getHours();
     return hora >= 18 && hora < 22;
@@ -157,10 +171,10 @@ function checkRestaurantOpen(){
 
 const spanItem = document.getElementById("date-span")
 const isOpen = checkRestaurantOpen();
-if(isOpen){
+if (isOpen) {
     spanItem.classList.remove("bg-red-500")
     spanItem.classList.add("bg-green-500")
-}else{
+} else {
     spanItem.classList.remove("bg-green-500")
     spanItem.classList.add("bg-red-500")
 }
