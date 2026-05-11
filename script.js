@@ -159,6 +159,7 @@ checkoutBtn.addEventListener("click", function () {
     window.open(`https://wa.me/${phone}?text=${message} Endereço:${addressInput.value}`)
 
     cart.length = 0;
+    addressInput.value = ""
     updateCartModal();
 })
 
@@ -178,4 +179,3 @@ if (isOpen) {
     spanItem.classList.remove("bg-green-500")
     spanItem.classList.add("bg-red-500")
 }
-
